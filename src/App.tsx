@@ -2,9 +2,9 @@ import { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  SettingOutlined,
-  FileSearchOutlined,
-  HistoryOutlined,
+  SaveOutlined,
+  HomeOutlined,
+  DatabaseOutlined,
 } from "@ant-design/icons";
 import classes from "./App.module.scss";
 import { Button, Layout, Menu, theme, Typography } from "antd";
@@ -23,27 +23,26 @@ const App: React.FC = () => {
     <Layout style={{ height: "100%" }}>
       <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
         <Menu
-          // theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
-              icon: <FileSearchOutlined />,
-              label: "Query Builder",
+              icon: <HomeOutlined />,
+              label: "Home Page",
               onClick: () => navigate("/"),
             },
             {
               key: "2",
-              icon: <HistoryOutlined />,
-              label: "Search History",
-              onClick: () => navigate("/history"),
+              icon: <DatabaseOutlined />,
+              label: "Outfit Builder",
+              onClick: () => navigate("/outfit-builder"),
             },
             {
               key: "3",
-              icon: <SettingOutlined />,
-              label: "Settings",
-              onClick: () => navigate("/settings"),
+              icon: <SaveOutlined />,
+              label: "Saved Outfits",
+              onClick: () => navigate("/saved"),
             },
           ]}
         />
