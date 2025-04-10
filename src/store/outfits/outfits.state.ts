@@ -1,7 +1,5 @@
 import { OutfitsState } from "./outfits.types";
 
-const initialState: OutfitsState = {
+export const initialState: OutfitsState = {
   outfits: [],
 };
-
-export default initialState;

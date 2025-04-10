@@ -1,7 +1,8 @@
 import { Garment, GarmentType } from "../../models/garment.model";
 
-export enum GarmentActionTypes {
-  SET_GARMENTS = "@@garments/SET_GARMENTS",
+export enum GarmentsActionTypes {
+  GET_GARMENTS_REQUEST = "@@garments/GET_GARMENTS_REQUEST",
+  GET_GARMENTS_SUCCESS = "@@garments/GET_GARMENTS_SUCCESS",
 }
 
 export interface GarmentsState {

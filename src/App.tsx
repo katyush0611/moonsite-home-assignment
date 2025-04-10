@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -6,10 +6,12 @@ import {
   HomeOutlined,
   DatabaseOutlined,
 } from "@ant-design/icons";
-import classes from "./App.module.scss";
 import { Button, Layout, Menu, theme, Typography } from "antd";
 import { useNavigate } from "react-router";
 import AppRouting from "./routes";
+import { useAppDispatch, useAppSelector } from "./utils/hooks";
+import type { AppDispatch } from "./store/store";
+import { fetchGarments } from "./store/garments/garments.actions";
 
 const { Header, Sider, Content } = Layout;
 
@@ -19,6 +21,14 @@ const App: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG, colorPrimary },
   } = theme.useToken();
   let navigate = useNavigate();
+
+  const dispatch = useAppDispatch<AppDispatch>();
+  const garmentsState = useAppSelector((state) => state.garmentsStore);
+
+  useEffect(() => {
+    dispatch(fetchGarments());
+  }, []);
+
   return (
     <Layout style={{ height: "100%" }}>
       <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>

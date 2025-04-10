@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import initialState from "./outfits.state";
+import {initialState} from "./outfits.state";
 import { OutfitsActionTypes, OutfitsState } from "./outfits.types";
 import * as OutfitsReduceFunctions from "./reducers/index";
 

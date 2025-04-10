@@ -1,10 +1,17 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { garmentsReducer } from "./garments/garments.reducer";
 import { outfitsReducer } from "./outfits/outfits.reducer";
+import { GarmentsState } from "./garments/garments.types";
+import { OutfitsState } from "./outfits/outfits.types";
+
+export interface ApplicationState {
+  garmnetsStore: GarmentsState;
+  outfitsStore: OutfitsState;
+}
 
 export const rootReducer = combineReducers({
-  garments: garmentsReducer,
-  outfits: outfitsReducer,
+  garmentsStore: garmentsReducer.reducer,
+  outfitsStore: outfitsReducer,
 });
 
 const store = configureStore({
