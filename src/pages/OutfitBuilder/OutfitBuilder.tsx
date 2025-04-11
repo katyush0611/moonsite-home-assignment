@@ -10,7 +10,6 @@ import { Outfit } from "../../models/outfit.model";
 import { saveOutfit } from "../../store/outfits/outfits.actions";
 
 const OutfitBuilder: React.FC = () => {
-  console.log("OutfitBuilderPage");
   const [current, setCurrent] = useState(0);
   const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
   let navigate = useNavigate();
@@ -18,10 +17,10 @@ const OutfitBuilder: React.FC = () => {
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
   const outfitsState = useAppSelector((state) => state.outfitsStore);
-
+  console.log("OutfitBuilderPage", garmentsState);
   useEffect(() => {
-    console.log(outfitsState.outfits);
-  }, [outfitsState]);
+    console.log(garmentsState);
+  }, []);
 
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
@@ -42,7 +41,7 @@ const OutfitBuilder: React.FC = () => {
       title: "Shirts",
       content: (
         <GarmentsList
-          garments={garmentsState.shirts}
+          garments={garmentsState.shirts.all}
           selectedGarmentId={outfit?.shirt?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -52,7 +51,7 @@ const OutfitBuilder: React.FC = () => {
       title: "Pants",
       content: (
         <GarmentsList
-          garments={garmentsState.pants}
+          garments={garmentsState.pants.all}
           selectedGarmentId={outfit?.pants?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -62,7 +61,7 @@ const OutfitBuilder: React.FC = () => {
       title: "Shoes",
       content: (
         <GarmentsList
-          garments={garmentsState.shoes}
+          garments={garmentsState.shoes.all}
           selectedGarmentId={outfit?.shoes?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -80,7 +79,7 @@ const OutfitBuilder: React.FC = () => {
 
   const onSaveOutfit = (): void => {
     dispatch(saveOutfit(outfit));
-    console.log(outfit);
+    // console.log(outfit);
   };
 
   const items = outfitBuilderSteps().map((item) => ({

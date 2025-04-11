@@ -5,13 +5,13 @@ import { GarmentsState } from "./garments/garments.types";
 import { OutfitsState } from "./outfits/outfits.types";
 
 export interface ApplicationState {
-  garmnetsStore: GarmentsState;
+  garmentsStore: GarmentsState;
   outfitsStore: OutfitsState;
 }
 
 export const rootReducer = combineReducers({
-  garmentsStore: garmentsReducer.reducer,
-  outfitsStore: outfitsReducer,
+  garmentsStore: garmentsReducer,
+  outfitsStore: outfitsReducer.reducer,
 });
 
 const store = configureStore({

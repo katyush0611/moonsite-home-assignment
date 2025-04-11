@@ -15,7 +15,7 @@ const GarmentsList: React.FC<OwnProps> = ({
 }: OwnProps) => {
   return (
     <Flex gap="middle" align="center" justify="space-evenlly" wrap>
-      {garments.map((garment) => (
+      {garments?.map((garment) => (
         <GarmentListItem
           key={garment.id}
           garment={garment}
