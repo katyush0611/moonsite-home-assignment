@@ -1,5 +1,7 @@
 import { GarmentsState } from "./garments.types";
 
 export const initialState: GarmentsState = {
-  garments: [],
+  shirts: [],
+  pants: [],
+  shoes: []
 };

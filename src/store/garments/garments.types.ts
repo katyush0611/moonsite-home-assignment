@@ -6,5 +6,8 @@ export enum GarmentsActionTypes {
 }
 
 export interface GarmentsState {
-  garments: Garment<GarmentType>[];
+  // garments: Garment<GarmentType>[];
+  shirts: Garment<"shirt">[];
+  pants: Garment<"pants">[];
+  shoes: Garment<"shoes">[];
 }
