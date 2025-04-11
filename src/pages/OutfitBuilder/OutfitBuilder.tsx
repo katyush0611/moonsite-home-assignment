@@ -7,19 +7,21 @@ import type { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router";
 import classes from "./OutfitBuilder.module.scss";
 import { Outfit } from "../../models/outfit.model";
+import { saveOutfit } from "../../store/outfits/outfits.actions";
 
 const OutfitBuilder: React.FC = () => {
   console.log("OutfitBuilderPage");
   const [current, setCurrent] = useState(0);
   const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
   let navigate = useNavigate();
-
+  //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
+  const outfitsState = useAppSelector((state) => state.outfitsStore);
 
   useEffect(() => {
-    console.log(garmentsState);
-  }, []);
+    console.log(outfitsState.outfits);
+  }, [outfitsState]);
 
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
@@ -76,7 +78,8 @@ const OutfitBuilder: React.FC = () => {
     setCurrent(current - 1);
   };
 
-  const saveOutfit = (): void => {
+  const onSaveOutfit = (): void => {
+    dispatch(saveOutfit(outfit));
     console.log(outfit);
   };
 
@@ -98,7 +101,11 @@ const OutfitBuilder: React.FC = () => {
           </Button>
         )}
         {current === outfitBuilderSteps().length - 1 && (
-          <Button type="primary" onClick={saveOutfit}>
+          <Button
+            type="primary"
+            onClick={onSaveOutfit}
+            disabled={!(outfit.shirt && outfit.pants && outfit.shoes)}
+          >
             Done
           </Button>
         )}

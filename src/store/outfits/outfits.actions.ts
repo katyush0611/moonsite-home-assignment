@@ -1,6 +1,6 @@
-import { Garment, GarmentType } from "../../models/garment.model";
+import { Outfit } from "../../models/outfit.model";
 import { action } from "../../utils/action-creator.util";
-import { GarmentActionTypes } from "./outfits.types";
+import { OutfitsActionTypes } from "./outfits.types";
 
-export const setGarments = (garments: Garment<GarmentType>[]) =>
-  action(GarmentActionTypes.SET_GARMENTS, { garments });
+export const saveOutfit = (outfit: Outfit) =>
+  action(OutfitsActionTypes.SAVE_OUTFIT, { outfit });
