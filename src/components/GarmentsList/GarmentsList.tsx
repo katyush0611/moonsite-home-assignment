@@ -4,17 +4,23 @@ import GarmentListItem from "../GarmentListItem/GarmentListItem";
 
 interface OwnProps {
   garments: Garment<GarmentType>[];
+  selectedGarmentId: number;
+  setSelectedGarment: (garment: Garment<GarmentType>) => void;
 }
 
-const GarmentsList: React.FC<OwnProps> = ({ garments }: OwnProps) => {
-  console.log("GarmentsList Component", garments);
+const GarmentsList: React.FC<OwnProps> = ({
+  garments,
+  selectedGarmentId,
+  setSelectedGarment,
+}: OwnProps) => {
   return (
     <Flex gap="middle" align="center" justify="space-evenlly" wrap>
       {garments.map((garment) => (
         <GarmentListItem
+          key={garment.id}
           garment={garment}
-          isSelected={garment.id === 26}
-          toggleSelected={console.log}
+          isSelected={garment.id === selectedGarmentId}
+          toggleSelected={() => setSelectedGarment(garment)}
         />
       ))}
     </Flex>

@@ -5,11 +5,13 @@ import { Garment, GarmentType } from "../../models/garment.model";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import type { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router";
+import classes from "./OutfitBuilder.module.scss";
+import { Outfit } from "../../models/outfit.model";
 
 const OutfitBuilder: React.FC = () => {
   console.log("OutfitBuilderPage");
-  const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
+  const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
   let navigate = useNavigate();
 
   const dispatch = useAppDispatch<AppDispatch>();
@@ -19,18 +21,50 @@ const OutfitBuilder: React.FC = () => {
     console.log(garmentsState);
   }, []);
 
+  const onSelectGarment = (garment: Garment<GarmentType>): void => {
+    switch (garment.type) {
+      case "shirt":
+        setOutfit({ ...outfit, shirt: garment as Garment<"shirt"> });
+        break;
+      case "pants":
+        setOutfit({ ...outfit, pants: garment as Garment<"pants"> });
+        break;
+      case "shoes":
+        setOutfit({ ...outfit, shoes: garment as Garment<"shoes"> });
+        break;
+    }
+  };
+
   const outfitBuilderSteps = () => [
     {
       title: "Shirts",
-      content: <GarmentsList garments={garmentsState.shirts} />,
+      content: (
+        <GarmentsList
+          garments={garmentsState.shirts}
+          selectedGarmentId={outfit?.shirt?.id}
+          setSelectedGarment={onSelectGarment}
+        />
+      ),
     },
     {
       title: "Pants",
-      content: <GarmentsList garments={garmentsState.pants} />,
+      content: (
+        <GarmentsList
+          garments={garmentsState.pants}
+          selectedGarmentId={outfit?.pants?.id}
+          setSelectedGarment={onSelectGarment}
+        />
+      ),
     },
     {
       title: "Shoes",
-      content: <GarmentsList garments={garmentsState.shoes} />,
+      content: (
+        <GarmentsList
+          garments={garmentsState.shoes}
+          selectedGarmentId={outfit?.shoes?.id}
+          setSelectedGarment={onSelectGarment}
+        />
+      ),
     },
   ];
 
@@ -42,27 +76,21 @@ const OutfitBuilder: React.FC = () => {
     setCurrent(current - 1);
   };
 
+  const saveOutfit = (): void => {
+    console.log(outfit);
+  };
+
   const items = outfitBuilderSteps().map((item) => ({
     key: item.title,
     title: item.title,
   }));
 
-  const contentStyle: React.CSSProperties = {
-    lineHeight: "260px",
-    textAlign: "center",
-    color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
-    marginTop: 16,
-    overflowY: "scroll",
-    height: "85%",
-  };
-
   return (
     <>
       <Steps current={current} items={items} />
-      <div style={contentStyle}>{outfitBuilderSteps()[current].content}</div>
+      <div className={classes.Content}>
+        {outfitBuilderSteps()[current].content}
+      </div>
       <div style={{ marginTop: 24 }}>
         {current < outfitBuilderSteps().length - 1 && (
           <Button type="primary" onClick={() => next()}>
@@ -70,10 +98,7 @@ const OutfitBuilder: React.FC = () => {
           </Button>
         )}
         {current === outfitBuilderSteps().length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => message.success("Processing complete!")}
-          >
+          <Button type="primary" onClick={saveOutfit}>
             Done
           </Button>
         )}

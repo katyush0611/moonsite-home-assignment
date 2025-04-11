@@ -30,7 +30,6 @@ const GarmentListItem: React.FC<OwnProps> = ({
   isSelected,
   toggleSelected,
 }) => {
-  console.log("GarmentListItem Component", garment);
   return (
     <Card
       hoverable
