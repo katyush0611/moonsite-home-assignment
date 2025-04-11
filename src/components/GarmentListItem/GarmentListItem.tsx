@@ -7,6 +7,7 @@ import classes from "./GarmentsListItem.module.scss";
 
 interface OwnProps {
   isSelected: boolean;
+  disabled: boolean;
   garment: Garment<GarmentType>;
   toggleSelected: () => void;
 }
@@ -27,13 +28,14 @@ const garmentImage = (type: GarmentType): string => {
 
 const GarmentListItem: React.FC<OwnProps> = ({
   garment,
+  disabled,
   isSelected,
   toggleSelected,
 }) => {
   return (
     <Card
       hoverable
-      className={`${classes.Card} ${isSelected && classes.Selected}`}
+      className={`${classes.Card} ${isSelected && classes.Selected} ${disabled && classes.Disabled}`}
       onClick={toggleSelected}
       //   style={{ width: 240, borderColor: "red" }}
       cover={<img alt="example" src={garmentImage(garment.type)} />}

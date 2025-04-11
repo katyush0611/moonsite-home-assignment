@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, message, Steps, theme } from "antd";
+import { Button, Steps } from "antd";
 import GarmentsList from "../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../models/garment.model";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
@@ -42,6 +42,7 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.shirts.all}
+          disabledIds={garmentsState.shirts.selected}
           selectedGarmentId={outfit?.shirt?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -52,6 +53,7 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.pants.all}
+          disabledIds={garmentsState.pants.selected}
           selectedGarmentId={outfit?.pants?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -62,6 +64,7 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.shoes.all}
+          disabledIds={garmentsState.shoes.selected}
           selectedGarmentId={outfit?.shoes?.id}
           setSelectedGarment={onSelectGarment}
         />

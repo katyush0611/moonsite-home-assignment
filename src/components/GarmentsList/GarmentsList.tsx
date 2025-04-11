@@ -4,12 +4,14 @@ import GarmentListItem from "../GarmentListItem/GarmentListItem";
 
 interface OwnProps {
   garments: Garment<GarmentType>[];
+  disabledIds: number[];
   selectedGarmentId: number;
   setSelectedGarment: (garment: Garment<GarmentType>) => void;
 }
 
 const GarmentsList: React.FC<OwnProps> = ({
   garments,
+  disabledIds,
   selectedGarmentId,
   setSelectedGarment,
 }: OwnProps) => {
@@ -18,6 +20,7 @@ const GarmentsList: React.FC<OwnProps> = ({
       {garments?.map((garment) => (
         <GarmentListItem
           key={garment.id}
+          disabled={!!disabledIds.find((id) => id === garment.id)}
           garment={garment}
           isSelected={garment.id === selectedGarmentId}
           toggleSelected={() => setSelectedGarment(garment)}
