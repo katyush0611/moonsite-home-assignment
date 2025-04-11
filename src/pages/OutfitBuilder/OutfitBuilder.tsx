@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import classes from "./OutfitBuilder.module.scss";
 import { Outfit } from "../../models/outfit.model";
 import { saveOutfit } from "../../store/outfits/outfits.actions";
+import { StepsProps } from "antd/lib";
 
 const OutfitBuilder: React.FC = () => {
   const [current, setCurrent] = useState(0);
@@ -38,6 +39,7 @@ const OutfitBuilder: React.FC = () => {
 
   const outfitBuilderSteps = () => [
     {
+      key: "shirts",
       title: "Shirts",
       content: (
         <GarmentsList
@@ -49,6 +51,7 @@ const OutfitBuilder: React.FC = () => {
       ),
     },
     {
+      key: "pants",
       title: "Pants",
       content: (
         <GarmentsList
@@ -60,6 +63,7 @@ const OutfitBuilder: React.FC = () => {
       ),
     },
     {
+      key: "shoes",
       title: "Shoes",
       content: (
         <GarmentsList
@@ -85,14 +89,18 @@ const OutfitBuilder: React.FC = () => {
     // console.log(outfit);
   };
 
-  const items = outfitBuilderSteps().map((item) => ({
-    key: item.title,
-    title: item.title,
-  }));
+  const items = outfitBuilderSteps().map(
+    (item) =>
+      ({
+        key: item.key,
+        title: item.title,
+        status: "process",
+      } as StepsProps)
+  );
 
   return (
     <>
-      <Steps current={current} items={items} />
+      <Steps current={current} items={items} onChange={setCurrent} />
       <div className={classes.Content}>
         {outfitBuilderSteps()[current].content}
       </div>
