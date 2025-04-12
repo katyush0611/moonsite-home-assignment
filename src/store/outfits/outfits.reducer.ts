@@ -8,13 +8,7 @@ import { OutfitsState } from "./outfits.types";
 const outfitsSlice = createSlice({
   name: "outfits",
   initialState,
-  reducers: {
-    // deleteOutfit(state: OutfitsState, action: PayloadAction<number>) {
-    //   state.outfits = state.outfits.filter(
-    //     (outfit) => outfit.id !== action.payload
-    //   );
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(saveOutfit.fulfilled, (state, action) => {

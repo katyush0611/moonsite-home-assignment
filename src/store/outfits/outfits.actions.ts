@@ -9,7 +9,7 @@ export const saveOutfit = createAsyncThunk(
     const { dispatch } = thunkAPI;
     dispatch(
       garmentsActions.setSelectedGarments({
-        ids: [outfit.shirt.id, outfit.pants.id, outfit.shoes.id],
+        outfit,
       })
     );
     return outfit;
@@ -20,11 +20,7 @@ export const deleteOutfit = createAsyncThunk(
   OutfitsActionTypes.DELETE_OUTFIT,
   async (outfit: Outfit, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    dispatch(
-      garmentsActions.setSelectedGarments({
-        ids: [outfit.shirt.id, outfit.pants.id, outfit.shoes.id],
-      })
-    );
+    dispatch(garmentsActions.setSelectedGarments({ outfit }));
     return outfit;
   }
 );

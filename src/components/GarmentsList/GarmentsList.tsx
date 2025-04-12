@@ -31,7 +31,6 @@ const GarmentsList: React.FC<OwnProps> = ({
     setSizeFilters(sizes);
   }, [filters]);
 
-  console.log("garments1: ", garments);
   useEffect(() => {
     const newFilteredGarments = garments.filter((garment) => {
       return (

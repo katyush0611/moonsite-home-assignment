@@ -1,19 +1,36 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { GarmentsState } from "../garments.types";
+import { Outfit } from "../../../models/outfit.model";
 
 const setSelectedGarments = (
   state: GarmentsState,
-  action: PayloadAction<{ ids: number[] }>
+  action: PayloadAction<{ outfit: Outfit }>
 ): GarmentsState => {
-  const { ids } = action.payload;
-  if (state.usedGarmentIds.find((id) => id === ids[0])) {
+  const { outfit } = action.payload;
+  let updatedUsedGarmentIds: number[] = [
+    outfit.shirt.id,
+    outfit.pants.id,
+    outfit.shoes.id,
+  ];
+
+  if (!state.usedGarmentIds.find((id) => id === outfit.shirt.id)) {
+    state.shirts.garments.forEach(
+      (g) => g.brand === outfit.shirt.brand && updatedUsedGarmentIds.push(g.id)
+    );
+    state.pants.garments.forEach(
+      (g) => g.brand === outfit.pants.brand && updatedUsedGarmentIds.push(g.id)
+    );
+    state.shoes.garments.forEach(
+      (g) => g.brand === outfit.shoes.brand && updatedUsedGarmentIds.push(g.id)
+    );
     return {
       ...state,
-      usedGarmentIds: state.usedGarmentIds.filter((id) => !ids.includes(id)),
+      usedGarmentIds: updatedUsedGarmentIds,
+      // state.usedGarmentIds.filter((id) => !ids.includes(id)),
       updatedLast: Date.now(),
     };
   }
-  state.usedGarmentIds.push(...ids);
+  // state.usedGarmentIds.push(...ids);
   return state;
 };
 
