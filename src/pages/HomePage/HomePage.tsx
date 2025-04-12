@@ -1,7 +1,6 @@
 import { Button, Card, Row, Col, Typography, Badge } from "antd";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "../../utils/hooks";
-import { GarmentType } from "../../models/garment.model";
 const { Title, Text } = Typography;
 
 const HomePage: React.FC = () => {
@@ -26,21 +25,30 @@ const HomePage: React.FC = () => {
         <Row gutter={16}>
           <Col>
             <Badge
-              count={garmentsState.shoes.length - outfitsState.outfits.length}
+              count={
+                garmentsState.shoes.garments.length -
+                outfitsState.outfits.length
+              }
             >
               <Text>Shoes</Text>
             </Badge>
           </Col>
           <Col>
             <Badge
-              count={garmentsState.shirts.length - outfitsState.outfits.length}
+              count={
+                garmentsState.shirts.garments.length -
+                outfitsState.outfits.length
+              }
             >
               <Text>Shirts</Text>
             </Badge>
           </Col>
           <Col>
             <Badge
-              count={garmentsState.pants.length - outfitsState.outfits.length}
+              count={
+                garmentsState.pants.garments.length -
+                outfitsState.outfits.length
+              }
             >
               <Text>Pants</Text>
             </Badge>

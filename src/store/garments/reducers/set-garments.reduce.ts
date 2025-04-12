@@ -22,9 +22,9 @@ const setGarments = (state: GarmentsState, action: any): GarmentsState => {
   });
   return {
     ...state,
-    shirts,
-    pants,
-    shoes,
+    shirts: { ...state.shirts, garments: shirts },
+    pants: { ...state.pants, garments: pants },
+    shoes: { ...state.shoes, garments: shoes },
   };
 };
 

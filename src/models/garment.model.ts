@@ -6,7 +6,7 @@ export type GarmentType = "shirt" | "pants" | "shoes";
 
 // export type ShoesSize = 30 | 31 | 32 | 33 | 34 | 41 | 42 | 43 | 44 | 45 | 46;
 
-export interface Garment<T extends GarmentType> {
+export interface Garment<T = GarmentType> {
   id: number;
   type: T;
   brand: string;
