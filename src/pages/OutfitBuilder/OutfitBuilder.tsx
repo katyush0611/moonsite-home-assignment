@@ -20,7 +20,7 @@ const OutfitBuilder: React.FC = () => {
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
-
+  console.log(garmentsState.shirts);
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
       case "shirt":
