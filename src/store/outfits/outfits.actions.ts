@@ -1,5 +1,4 @@
 import { Outfit } from "../../models/outfit.model";
-import { action } from "../../utils/action-creator.util";
 import { OutfitsActionTypes } from "./outfits.types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { garmentsActions } from "../garments/garments.reducer";

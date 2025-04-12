@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { Outfit } from "../../models/outfit.model";
 import { AppDispatch } from "../../store/store";
 import { DeleteOutlined } from "@ant-design/icons";
+import { outfitsActions } from "../../store/outfits/outfits.reducer";
+
 const SavedOutfits: React.FC = () => {
   let navigate = useNavigate();
   //@ts-ignore
@@ -21,7 +23,7 @@ const SavedOutfits: React.FC = () => {
             <Button
               type="primary"
               icon={<DeleteOutlined />}
-              onClick={() => console.log("delete outfit:", outfit)}
+              onClick={() => dispatch(outfitsActions.deleteOutfit(outfit.id))}
             />,
           ]}
         >
@@ -54,18 +56,6 @@ const SavedOutfits: React.FC = () => {
         </Card>
       ))}
     </Space>
-    // <List
-    //   header={<div>Saved Outfits</div>}
-    //   bordered
-    //   dataSource={outfitsState.outfits}
-    //   renderItem={(outfit: Outfit) => (
-    //     <List.Item>
-    //       <Typography.Text mark>[Shirt]</Typography.Text> {outfit.shirt.brand}
-    //       <Typography.Text mark>[Pants]</Typography.Text> {outfit.pants.brand}
-    //       <Typography.Text mark>[Shoes]</Typography.Text> {outfit.shoes.brand}
-    //     </List.Item>
-    //   )}
-    // />
   );
 };
 

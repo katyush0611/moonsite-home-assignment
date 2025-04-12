@@ -6,5 +6,5 @@ export enum OutfitsActionTypes {
 }
 
 export interface OutfitsState {
-  readonly outfits: Outfit[];
+  outfits: Outfit[];
 }
