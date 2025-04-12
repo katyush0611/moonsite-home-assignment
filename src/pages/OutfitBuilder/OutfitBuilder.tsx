@@ -4,16 +4,19 @@ import GarmentsList from "../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../models/garment.model";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import type { AppDispatch } from "../../store/store";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import classes from "./OutfitBuilder.module.scss";
 import { Outfit } from "../../models/outfit.model";
 import { saveOutfit } from "../../store/outfits/outfits.actions";
 import { StepsProps } from "antd/lib";
 
 const OutfitBuilder: React.FC = () => {
-  const [current, setCurrent] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [current, setCurrent] = useState(location.state?.initialStep || 0);
   const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
-  let navigate = useNavigate();
+
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
@@ -83,7 +86,7 @@ const OutfitBuilder: React.FC = () => {
     dispatch(saveOutfit(outfit));
     navigate("/saved");
   };
-
+  console.log(location.state);
   const items = outfitBuilderSteps().map(
     (item) =>
       ({
@@ -95,7 +98,12 @@ const OutfitBuilder: React.FC = () => {
 
   return (
     <>
-      <Steps current={current} items={items} onChange={setCurrent} />
+      <Steps
+        // initial={location.state.initialStep}
+        current={current}
+        items={items}
+        onChange={setCurrent}
+      />
       <div className={classes.Content}>
         {outfitBuilderSteps()[current].content}
       </div>
