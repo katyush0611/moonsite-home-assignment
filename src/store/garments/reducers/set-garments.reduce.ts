@@ -10,9 +10,9 @@ const extractAttributes = <S = number | string>(
   let colors: string[] = [];
 
   garments.forEach((garment) => {
-    brands.push(garment.brand);
-    sizes.push(garment.size);
-    colors.push(garment.color);
+    !brands.includes(garment.brand) && brands.push(garment.brand);
+    !sizes.includes(garment.size) && sizes.push(garment.size);
+    !colors.includes(garment.color) && colors.push(garment.color);
   });
 
   return { brands, sizes, colors };

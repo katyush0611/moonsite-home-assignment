@@ -20,7 +20,6 @@ const OutfitBuilder: React.FC = () => {
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
-  console.log(garmentsState.shirts);
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
       case "shirt":
@@ -41,6 +40,11 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.shirts.garments}
+          filters={{
+            barnds: garmentsState.shirts.brands,
+            colors: garmentsState.shirts.colors,
+            sizes: garmentsState.shirts.sizes,
+          }}
           disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.shirt?.id}
           setSelectedGarment={onSelectGarment}
@@ -53,6 +57,11 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.pants.garments}
+          filters={{
+            barnds: garmentsState.pants.brands,
+            colors: garmentsState.pants.colors,
+            sizes: garmentsState.pants.sizes,
+          }}
           disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.pants?.id}
           setSelectedGarment={onSelectGarment}
@@ -65,6 +74,11 @@ const OutfitBuilder: React.FC = () => {
       content: (
         <GarmentsList
           garments={garmentsState.shoes.garments}
+          filters={{
+            barnds: garmentsState.shoes.brands,
+            colors: garmentsState.shoes.colors,
+            sizes: garmentsState.shoes.sizes,
+          }}
           disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.shoes?.id}
           setSelectedGarment={onSelectGarment}
@@ -96,12 +110,7 @@ const OutfitBuilder: React.FC = () => {
 
   return (
     <>
-      <Steps
-        // initial={location.state.initialStep}
-        current={current}
-        items={items}
-        onChange={setCurrent}
-      />
+      <Steps current={current} items={items} onChange={setCurrent} />
       <div className={classes.Content}>
         {outfitBuilderSteps()[current].content}
       </div>
