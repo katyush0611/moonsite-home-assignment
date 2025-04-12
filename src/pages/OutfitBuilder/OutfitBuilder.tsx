@@ -34,7 +34,7 @@ const OutfitBuilder: React.FC = () => {
         break;
     }
   };
-
+  console.log(garmentsState.usedGarmentIds);
   const outfitBuilderSteps = () => [
     {
       key: "shirts",
@@ -86,7 +86,6 @@ const OutfitBuilder: React.FC = () => {
     dispatch(saveOutfit(outfit));
     navigate("/saved");
   };
-  console.log(location.state);
   const items = outfitBuilderSteps().map(
     (item) =>
       ({

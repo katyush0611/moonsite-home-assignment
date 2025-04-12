@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   const navigateToOutfitBuilder = (index: number): void => {
     navigate("/outfit-builder", { state: { initialStep: index } });
   };
-
+  console.log(garmentsState.usedGarmentIds);
   return (
     <div style={{ padding: 24 }}>
       <Button onClick={() => navigate("/saved")}>

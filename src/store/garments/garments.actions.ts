@@ -15,7 +15,6 @@ export const fetchGarments = createAsyncThunk(
 export const setGarments = (garments: Garment<GarmentType>[]) =>
   action(GarmentsActionTypes.GET_GARMENTS_SUCCESS, { garments });
 
-// export const setSelectedGarment = (type: GarmentType, id: number) => createAction(GarmentsActionTypes.SAVE_SELECTED_GARMENT_ID, {type, id});
 
 export const setSelectedGarment = createAction(
   GarmentsActionTypes.SAVE_SELECTED_GARMENT_ID,

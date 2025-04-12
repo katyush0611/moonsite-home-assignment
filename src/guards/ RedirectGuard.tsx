@@ -5,7 +5,6 @@ const RedirectGuard = ({ children }) => {
 
   // Only allow access if redirected with a specific state
   const cameFromRedirect = location.state?.fromSearch;
-  console.log(location.state);
 
   return cameFromRedirect ? children : <Navigate to="/" replace />;
 };

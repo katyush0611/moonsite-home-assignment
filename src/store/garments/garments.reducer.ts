@@ -10,11 +10,11 @@ const garmentsSlice = createSlice({
   name: "garments",
   initialState,
   reducers: {
-    setSelectedGarments(state: GarmentsState, action: PayloadAction<Outfit>) {
-      state = {
-        ...GarmentsReduceFunctions.setSelectedGarments(state, action),
-        updatedLast: Date.now(),
-      };
+    setSelectedGarments(
+      state: GarmentsState,
+      action: PayloadAction<{ ids: number[] }>
+    ) {
+      return GarmentsReduceFunctions.setSelectedGarments(state, action);
     },
   },
   extraReducers: (builder) => {

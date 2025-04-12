@@ -1,16 +1,14 @@
 import { List, Flex, Typography, Card, Space, Button } from "antd";
-import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { AppDispatch } from "../../store/store";
 import { DeleteOutlined } from "@ant-design/icons";
-import { outfitsActions } from "../../store/outfits/outfits.reducer";
+import { deleteOutfit } from "../../store/outfits/outfits.actions";
 
 const SavedOutfits: React.FC = () => {
-  let navigate = useNavigate();
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const outfitsState = useAppSelector((state) => state.outfitsStore);
-  console.log(outfitsState);
+
   return (
     <List
       dataSource={outfitsState.outfits}
@@ -21,12 +19,11 @@ const SavedOutfits: React.FC = () => {
             key={outfit.id}
             title={`Outfit Id - ${outfit.id}`}
             style={{ width: "100%" }}
-            // size="small"
             extra={[
               <Button
                 type="primary"
                 icon={<DeleteOutlined />}
-                onClick={() => dispatch(outfitsActions.deleteOutfit(outfit.id))}
+                onClick={() => dispatch(deleteOutfit(outfit))}
               />,
             ]}
           >
