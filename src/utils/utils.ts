@@ -1,9 +1,5 @@
-export const isValidURL = (url: string) => {
-  try {
-    const parsed = new URL(url);
-
-    return ["http:", "https:"].includes(parsed.protocol);
-  } catch (e) {
-    return false;
-  }
+export const randomIdGenerator = (prefix: number): number => {
+  const start = prefix.toString();
+  const randomPart = Math.floor(Math.random() * 9999).toString();
+  return parseInt(start + randomPart);
 };
