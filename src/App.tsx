@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme, Typography } from "antd";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
 import AppRouting from "./routes";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import type { AppDispatch } from "./store/store";
@@ -20,8 +21,9 @@ const App: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG, colorPrimary },
   } = theme.useToken();
-  let navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
 
@@ -34,22 +36,23 @@ const App: React.FC = () => {
       <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
         <Menu
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "1",
+              key: "/",
               icon: <HomeOutlined />,
               label: "Home Page",
               onClick: () => navigate("/"),
             },
             {
-              key: "2",
+              key: "/outfit-builder",
               icon: <DatabaseOutlined />,
               label: "Outfit Builder",
               onClick: () => navigate("/outfit-builder"),
             },
             {
-              key: "3",
+              key: "/saved",
               icon: <SaveOutlined />,
               label: "Saved Outfits",
               onClick: () => navigate("/saved"),
