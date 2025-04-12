@@ -17,11 +17,6 @@ const OutfitBuilder: React.FC = () => {
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
-  const outfitsState = useAppSelector((state) => state.outfitsStore);
-  console.log("OutfitBuilderPage", garmentsState);
-  useEffect(() => {
-    console.log(garmentsState);
-  }, []);
 
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
@@ -86,7 +81,7 @@ const OutfitBuilder: React.FC = () => {
 
   const onSaveOutfit = (): void => {
     dispatch(saveOutfit(outfit));
-    // console.log(outfit);
+    navigate("/saved");
   };
 
   const items = outfitBuilderSteps().map(

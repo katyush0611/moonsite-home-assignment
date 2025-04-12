@@ -11,7 +11,7 @@ export interface ApplicationState {
 
 export const rootReducer = combineReducers({
   garmentsStore: garmentsReducer,
-  outfitsStore: outfitsReducer.reducer,
+  outfitsStore: outfitsReducer,
 });
 
 const store = configureStore({

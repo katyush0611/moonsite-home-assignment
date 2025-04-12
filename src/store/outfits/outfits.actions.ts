@@ -27,5 +27,6 @@ export const saveOutfit = createAsyncThunk(
         id: outfit.shoes.id,
       })
     );
+    return outfit;
   }
 );
