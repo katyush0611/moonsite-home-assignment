@@ -4,17 +4,15 @@ import * as GarmentsReduceFunctions from "./reducers/index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchGarments } from "./garments.actions";
 import { GarmentType } from "../../models/garment.model";
+import { Outfit } from "../../models/outfit.model";
 
 const garmentsSlice = createSlice({
   name: "garments",
   initialState,
   reducers: {
-    setSelectedGarment(
-      state: GarmentsState,
-      action: PayloadAction<{ type: GarmentType; id: number }>
-    ) {
+    setSelectedGarments(state: GarmentsState, action: PayloadAction<Outfit>) {
       state = {
-        ...GarmentsReduceFunctions.setSelectedGarment(state, action),
+        ...GarmentsReduceFunctions.setSelectedGarments(state, action),
         updatedLast: Date.now(),
       };
     },

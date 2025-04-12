@@ -1,4 +1,4 @@
-import { Garment, GarmentType } from "../../models/garment.model";
+import { Garment } from "../../models/garment.model";
 
 export enum GarmentsActionTypes {
   GET_GARMENTS_REQUEST = "@@garments/GET_GARMENTS_REQUEST",
@@ -7,12 +7,9 @@ export enum GarmentsActionTypes {
 }
 
 export interface GarmentsState {
-  // garments: Garment<GarmentType>[];
-  shirts: {
-    all: Garment<"shirt">[];
-    selected: number[];
-  };
-  pants: { all: Garment<"pants">[]; selected: number[] };
-  shoes: { all: Garment<"shoes">[]; selected: number[] };
+  shirts: Garment<"shirt">[];
+  pants: Garment<"pants">[];
+  shoes: Garment<"shoes">[];
+  usedGarmentIds: number[];
   updatedLast: number;
 }

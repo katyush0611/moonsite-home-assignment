@@ -41,8 +41,8 @@ const OutfitBuilder: React.FC = () => {
       title: "Shirts",
       content: (
         <GarmentsList
-          garments={garmentsState.shirts.all}
-          disabledIds={garmentsState.shirts.selected}
+          garments={garmentsState.shirts}
+          disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.shirt?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -53,8 +53,8 @@ const OutfitBuilder: React.FC = () => {
       title: "Pants",
       content: (
         <GarmentsList
-          garments={garmentsState.pants.all}
-          disabledIds={garmentsState.pants.selected}
+          garments={garmentsState.pants}
+          disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.pants?.id}
           setSelectedGarment={onSelectGarment}
         />
@@ -65,8 +65,8 @@ const OutfitBuilder: React.FC = () => {
       title: "Shoes",
       content: (
         <GarmentsList
-          garments={garmentsState.shoes.all}
-          disabledIds={garmentsState.shoes.selected}
+          garments={garmentsState.shoes}
+          disabledIds={garmentsState.usedGarmentIds}
           selectedGarmentId={outfit?.shoes?.id}
           setSelectedGarment={onSelectGarment}
         />

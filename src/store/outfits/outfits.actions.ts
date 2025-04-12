@@ -8,24 +8,7 @@ export const saveOutfit = createAsyncThunk(
   async (outfit: Outfit, thunkAPI) => {
     console.log(outfit);
     const { dispatch } = thunkAPI;
-    dispatch(
-      garmentsActions.setSelectedGarment({
-        type: outfit.shirt.type,
-        id: outfit.shirt.id,
-      })
-    );
-    dispatch(
-      garmentsActions.setSelectedGarment({
-        type: outfit.pants.type,
-        id: outfit.pants.id,
-      })
-    );
-    dispatch(
-      garmentsActions.setSelectedGarment({
-        type: outfit.shoes.type,
-        id: outfit.shoes.id,
-      })
-    );
+    dispatch(garmentsActions.setSelectedGarments(outfit));
     return outfit;
   }
 );

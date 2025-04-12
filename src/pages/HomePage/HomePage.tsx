@@ -26,30 +26,21 @@ const HomePage: React.FC = () => {
         <Row gutter={16}>
           <Col>
             <Badge
-              count={
-                garmentsState.shoes.all.length -
-                garmentsState.shoes.selected.length
-              }
+              count={garmentsState.shoes.length - outfitsState.outfits.length}
             >
               <Text>Shoes</Text>
             </Badge>
           </Col>
           <Col>
             <Badge
-              count={
-                garmentsState.shirts.all.length -
-                garmentsState.shirts.selected.length
-              }
+              count={garmentsState.shirts.length - outfitsState.outfits.length}
             >
               <Text>Shirts</Text>
             </Badge>
           </Col>
           <Col>
             <Badge
-              count={
-                garmentsState.pants.all.length -
-                garmentsState.pants.selected.length
-              }
+              count={garmentsState.pants.length - outfitsState.outfits.length}
             >
               <Text>Pants</Text>
             </Badge>
