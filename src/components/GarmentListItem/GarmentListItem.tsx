@@ -35,9 +35,10 @@ const GarmentListItem: React.FC<OwnProps> = ({
   return (
     <Card
       hoverable
-      className={`${classes.Card} ${isSelected && classes.Selected} ${disabled && classes.Disabled}`}
+      className={`${classes.Card} ${isSelected && classes.Selected} ${
+        disabled && classes.Disabled
+      }`}
       onClick={toggleSelected}
-      //   style={{ width: 240, borderColor: "red" }}
       cover={<img alt="example" src={garmentImage(garment.type)} />}
     >
       <Card.Meta
