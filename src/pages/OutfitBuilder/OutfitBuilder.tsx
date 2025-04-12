@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Steps } from "antd";
 import GarmentsList from "../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../models/garment.model";
@@ -13,13 +13,14 @@ import { StepsProps } from "antd/lib";
 const OutfitBuilder: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [current, setCurrent] = useState(location.state?.initialStep || 0);
-  const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
-
+  const initialStep = location.state?.initialStep;
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
+
+  const [current, setCurrent] = useState(0);
+  const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
+
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
     switch (garment.type) {
       case "shirt":
@@ -33,6 +34,7 @@ const OutfitBuilder: React.FC = () => {
         break;
     }
   };
+
   const outfitBuilderSteps = () => [
     {
       key: "shirts",
@@ -99,14 +101,21 @@ const OutfitBuilder: React.FC = () => {
     dispatch(saveOutfit(outfit));
     navigate("/saved");
   };
-  const items = outfitBuilderSteps().map(
-    (item) =>
-      ({
-        key: item.key,
-        title: item.title,
-        status: "process",
-      } as StepsProps)
-  );
+
+  // [item, ...arr.filter(i => i !== item)]
+  // location.state?.initialStep
+  const items = outfitBuilderSteps()
+    .map(
+      (item) =>
+        ({
+          iconPrefix: item.key,
+          title: item.title,
+          status: "process",
+        } as StepsProps)
+    )
+    .sort((a, b) =>
+      a.iconPrefix === initialStep ? -1 : b.iconPrefix === initialStep ? 1 : 0
+    );
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { Button, Card, Row, Col, Typography, Badge } from "antd";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "../../utils/hooks";
+import { GarmentType } from "../../models/garment.model";
 const { Title, Text } = Typography;
 
 const HomePage: React.FC = () => {
@@ -8,8 +9,8 @@ const HomePage: React.FC = () => {
   const garmentsState = useAppSelector((state) => state.garmentsStore);
   const outfitsState = useAppSelector((state) => state.outfitsStore);
 
-  const navigateToOutfitBuilder = (index: number): void => {
-    navigate("/outfit-builder", { state: { initialStep: index } });
+  const navigateToOutfitBuilder = (type: GarmentType): void => {
+    navigate("/outfit-builder", { state: { initialStep: type } });
   };
 
   return (
@@ -59,17 +60,17 @@ const HomePage: React.FC = () => {
       <Card style={{ marginTop: 24 }}>
         <Row gutter={16}>
           <Col>
-            <Button onClick={() => navigateToOutfitBuilder(0)}>
+            <Button onClick={() => navigateToOutfitBuilder("shirt")}>
               Select Shirt
             </Button>
           </Col>
           <Col>
-            <Button onClick={() => navigateToOutfitBuilder(1)}>
+            <Button onClick={() => navigateToOutfitBuilder("pants")}>
               Select Pants
             </Button>
           </Col>
           <Col>
-            <Button onClick={() => navigateToOutfitBuilder(2)}>
+            <Button onClick={() => navigateToOutfitBuilder("shoes")}>
               Select Shoes
             </Button>
           </Col>

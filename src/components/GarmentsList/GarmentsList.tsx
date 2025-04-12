@@ -29,8 +29,9 @@ const GarmentsList: React.FC<OwnProps> = ({
     setBrandFilters(barnds);
     setColorFilters(colors);
     setSizeFilters(sizes);
-  }, []);
+  }, [filters]);
 
+  console.log("garments1: ", garments);
   useEffect(() => {
     const newFilteredGarments = garments.filter((garment) => {
       return (
@@ -39,6 +40,7 @@ const GarmentsList: React.FC<OwnProps> = ({
         sizeFilters.includes(garment.size)
       );
     });
+
     setFilteredGarments(newFilteredGarments);
   }, [garments, brandFilters, colorFilters, sizeFilters]);
 
