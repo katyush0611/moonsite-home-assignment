@@ -8,19 +8,18 @@ const SavedOutfits: React.FC = () => {
   //@ts-ignore
   const dispatch = useAppDispatch<AppDispatch>();
   const outfitsState = useAppSelector((state) => state.outfitsStore);
-
   return (
     <List
       dataSource={outfitsState.outfits}
       style={{ height: "100%", overflowY: "scroll" }}
       renderItem={(outfit) => (
-        <List.Item>
+        <List.Item key={outfit.id}>
           <Card
-            key={outfit.id}
             title={`Outfit Id - ${outfit.id}`}
             style={{ width: "100%" }}
             extra={[
               <Button
+                key={"delete-button"}
                 type="primary"
                 icon={<DeleteOutlined />}
                 onClick={() => dispatch(deleteOutfit(outfit))}

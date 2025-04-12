@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Steps } from "antd";
 import GarmentsList from "../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../models/garment.model";
@@ -34,7 +34,6 @@ const OutfitBuilder: React.FC = () => {
         break;
     }
   };
-  console.log(garmentsState.usedGarmentIds);
   const outfitBuilderSteps = () => [
     {
       key: "shirts",

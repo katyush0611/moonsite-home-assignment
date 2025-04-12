@@ -67,15 +67,6 @@ const HomePage: React.FC = () => {
           </Col>
         </Row>
       </Card>
-
-      <Card style={{ marginTop: 24 }}>
-        <Title level={5}>פריטים נבחרים</Title>
-        <Text>👟 נעליים: Nike Air</Text>
-        <br />
-        <Text>👕 חולצה: Zara T-Shirt</Text>
-        <br />
-        <Text>👖 מכנסיים: Levi's 501</Text>
-      </Card>
     </div>
   );
 };
