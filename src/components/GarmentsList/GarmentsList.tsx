@@ -2,6 +2,7 @@ import { Flex, Select } from "antd";
 import { Garment, GarmentType } from "../../models/garment.model";
 import GarmentListItem from "../GarmentListItem/GarmentListItem";
 import { useEffect, useState } from "react";
+import { recommendFromGarmentSize } from "../../utils/recommendations.util";
 
 interface OwnProps<S = string | number> {
   garments: Garment<GarmentType>[];
@@ -41,6 +42,9 @@ const GarmentsList: React.FC<OwnProps> = ({
     });
 
     setFilteredGarments(newFilteredGarments);
+    console.log(
+      recommendFromGarmentSize(garments[0].type, garments[0].size.toString())
+    );
   }, [garments, brandFilters, colorFilters, sizeFilters]);
 
   return (

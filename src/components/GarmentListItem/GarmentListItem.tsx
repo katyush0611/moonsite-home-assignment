@@ -1,9 +1,9 @@
 import { Card } from "antd";
 import { Garment, GarmentType } from "../../models/garment.model";
-import shoeslogo from "../../assets/images/shoes.png";
-import pantslogo from "../../assets/images/pants.png";
-import shirtslogo from "../../assets/images/shirt.png";
 import classes from "./GarmentsListItem.module.scss";
+import { ShirtSVG } from "../../assets/images/ShirtSVG";
+import { PantSVG } from "../../assets/images/PantsSVG";
+import { ShoesSVG } from "../../assets/images/ShoesSVG";
 
 interface OwnProps {
   isSelected: boolean;
@@ -12,16 +12,16 @@ interface OwnProps {
   toggleSelected: () => void;
 }
 
-const garmentImage = (type: GarmentType): string => {
-  switch (type) {
+const garmentImage = (garment: Garment) => {
+  switch (garment.type) {
     case "shirt":
-      return shirtslogo;
+      return <ShirtSVG fill={garment.color} />;
       break;
     case "pants":
-      return pantslogo;
+      return <PantSVG fill={garment.color} />;
       break;
     case "shoes":
-      return shoeslogo;
+      return <ShoesSVG fill={garment.color} />;
       break;
   }
 };
@@ -39,7 +39,7 @@ const GarmentListItem: React.FC<OwnProps> = ({
         disabled && classes.Disabled
       }`}
       onClick={toggleSelected}
-      cover={<img alt="example" src={garmentImage(garment.type)} />}
+      cover={garmentImage(garment)}
     >
       <Card.Meta
         title={garment.brand}
