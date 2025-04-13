@@ -52,6 +52,7 @@ localhost:5173/
 
 #### Features
 
+- Fetch all garments from API service and set the store on init
 - Saved outfits count
   - navigate to outfits page on click
 - Availble garments count
