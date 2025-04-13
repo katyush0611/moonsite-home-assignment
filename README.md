@@ -48,6 +48,17 @@ localhost:5173/
 - Saved Outfits Page
   ![Saved Outfits Page Screenshot](./src//assets/images/outfits-page-screenshot.jpeg)
 
+## Home Page
+
+#### Features
+
+- Saved outfits count
+  - navigate to outfits page on click
+- Availble garments count
+  - for each garment type
+- Button for each garment type
+  - on click navigating to outfit builder page and starting the proccess with the chosen garment type.
+
 ## OutfitBuilder
 
 #### Custom hooks
@@ -102,4 +113,19 @@ recommendFromGarmentColor: (props) => string[];
 recommendFromGarmentSize("shirt", "S") === {pants: [30, 31], shoes: [36, 37]}
 
 recommendFromGarmentColor("red", ["white", "red", "pink", "green"]) === ["red", "white", "pink"]
+```
+
+## Saved Outfits Page
+
+#### Features
+
+- Displays a list of outfits, showing outfit garments and it parameters (brand, size, color)
+
+```dash
+interface Outfit {
+  id: number;
+  shirt: Garment<"shirt">;
+  pants: Garment<"pants">;
+  shoes: Garment<"shoes">;
+}
 ```
