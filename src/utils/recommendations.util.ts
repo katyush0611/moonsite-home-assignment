@@ -1,4 +1,5 @@
 import { GarmentType } from "../models/garment.model";
+import { colorDistance, getHexFromColorName, hexToRgb } from "./colors.util";
 
 type RecommendationMap = {
   [key: string]: {
@@ -58,4 +59,31 @@ export const recommendFromGarmentSize = (
         shirts: shoesBasedRecommendation[size].shirts || [],
       };
   }
+};
+
+export const recommendFromGarmentColor = (
+  garmentColor: string,
+  availableColors: string[],
+  count = 3
+): string[] => {
+  const inputHex = getHexFromColorName(garmentColor);
+  if (!inputHex) throw new Error(`Invalid input color: ${garmentColor}`);
+
+  const inputRGB = hexToRgb(inputHex);
+
+  const validColors = availableColors
+    .map((color) => {
+      const hex = getHexFromColorName(color);
+      if (!hex) return null;
+      return {
+        color,
+        dist: colorDistance(inputRGB, hexToRgb(hex)),
+      };
+    })
+    .filter((c) => c !== null) as { color: string; dist: number }[];
+
+  return validColors
+    .sort((a, b) => a.dist - b.dist)
+    .slice(0, count)
+    .map((c) => c.color);
 };
