@@ -17,11 +17,9 @@ const garmentsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchGarments.fulfilled, (state, action) => {
-        return GarmentsReduceFunctions.setGarments(state, action);
-      })
-      .addCase(fetchGarments.rejected, (state) => {});
+    builder.addCase(fetchGarments.fulfilled, (state, action) => {
+      return GarmentsReduceFunctions.setGarments(state, action);
+    });
   },
 });
 

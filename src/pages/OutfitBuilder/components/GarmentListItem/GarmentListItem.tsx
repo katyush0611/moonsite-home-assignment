@@ -1,9 +1,9 @@
 import { Card } from "antd";
-import { Garment, GarmentType } from "../../models/garment.model";
+import { Garment, GarmentType } from "../../../../models/garment.model";
+import { ShirtSVG } from "../../../../assets/images/ShirtSVG";
 import classes from "./GarmentsListItem.module.scss";
-import { ShirtSVG } from "../../assets/images/ShirtSVG";
-import { PantSVG } from "../../assets/images/PantsSVG";
-import { ShoesSVG } from "../../assets/images/ShoesSVG";
+import { PantSVG } from "../../../../assets/images/PantsSVG";
+import { ShoesSVG } from "../../../../assets/images/ShoesSVG";
 
 interface OwnProps {
   isSelected: boolean;
@@ -16,13 +16,10 @@ const garmentImage = (garment: Garment) => {
   switch (garment.type) {
     case "shirt":
       return <ShirtSVG fill={garment.color} />;
-      break;
     case "pants":
       return <PantSVG fill={garment.color} />;
-      break;
     case "shoes":
       return <ShoesSVG fill={garment.color} />;
-      break;
   }
 };
 

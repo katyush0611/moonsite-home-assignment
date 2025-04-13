@@ -1,11 +1,9 @@
 import { Flex, Select } from "antd";
-import { Garment, GarmentType } from "../../models/garment.model";
 import GarmentListItem from "../GarmentListItem/GarmentListItem";
-import { useEffect, useState } from "react";
-import {
-  recommendFromGarmentColor,
-  recommendFromGarmentSize,
-} from "../../utils/recommendations.util";
+import { Garment, GarmentType } from "../../../../models/garment.model";
+import { useFilters } from "./hooks/useFilters";
+import { useFilteredGarments } from "./hooks/useFilteredGarments";
+import { BaseOptionType } from "antd/es/select";
 
 interface OwnProps<S = string | number> {
   garments: Garment<GarmentType>[];
@@ -26,36 +24,22 @@ const GarmentsList: React.FC<OwnProps> = ({
 }: OwnProps) => {
   const { barnds, colors, sizes } = filters;
 
-  const [filteredGarments, setFilteredGarments] = useState<Garment[]>([]);
-  const [brandFilters, setBrandFilters] = useState<string[]>([]);
-  const [colorFilters, setColorFilters] = useState<string[]>([]);
-  const [sizeFilters, setSizeFilters] = useState<(string | number)[]>([]);
+  const {
+    brandFilters,
+    setBrandFilters,
+    colorFilters,
+    setColorFilters,
+    sizeFilters,
+    setSizeFilters,
+  } = useFilters(filters);
 
-  useEffect(() => {
-    setBrandFilters(barnds);
-    setColorFilters(colors);
-    setSizeFilters(sizes);
-  }, [filters]);
-
-  useEffect(() => {
-    const newFilteredGarments = garments.filter((garment) => {
-      return (
-        brandFilters.includes(garment.brand) &&
-        colorFilters.includes(garment.color) &&
-        sizeFilters.includes(garment.size)
-      );
-    });
-
-    setFilteredGarments(
-      newFilteredGarments
-        .sort(
-          (a, b) =>
-            recommendations.colors.reverse().indexOf(b.color) -
-            recommendations.colors.reverse().indexOf(a.color)
-        )
-        .sort((a, b) => recommendations.sizes.length && +a.size - +b.size)
-    );
-  }, [garments, brandFilters, colorFilters, sizeFilters]);
+  const filteredGarments = useFilteredGarments(
+    garments,
+    brandFilters,
+    colorFilters,
+    sizeFilters,
+    recommendations
+  );
 
   const onGarmentSelected = (garment: Garment): void => {
     setSelectedGarment(garment);
@@ -90,9 +74,8 @@ const GarmentsList: React.FC<OwnProps> = ({
           placeholder="By Size"
           style={{ width: "100%" }}
           onChange={(val) => setSizeFilters(val.length ? val : sizes)}
-          //@ts-ignore
           options={sizes.map((size) => {
-            return { value: size, title: size };
+            return { value: size, title: size } as BaseOptionType;
           })}
         />
       </Flex>

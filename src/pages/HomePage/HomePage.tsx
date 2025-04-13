@@ -2,12 +2,18 @@ import { Button, Card, Row, Col, Typography, Badge } from "antd";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "../../utils/hooks";
 import { GarmentType } from "../../models/garment.model";
+import { GarmentsState } from "../../store/garments/garments.types";
+import { OutfitsState } from "../../store/outfits/outfits.types";
 const { Title, Text } = Typography;
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const garmentsState = useAppSelector((state) => state.garmentsStore);
-  const outfitsState = useAppSelector((state) => state.outfitsStore);
+  const garmentsState = useAppSelector<GarmentsState>(
+    (state) => state.garmentsStore
+  );
+  const outfitsState = useAppSelector<OutfitsState>(
+    (state) => state.outfitsStore
+  );
 
   const navigateToOutfitBuilder = (type: GarmentType): void => {
     navigate("/outfit-builder", { state: { initialStep: type } });

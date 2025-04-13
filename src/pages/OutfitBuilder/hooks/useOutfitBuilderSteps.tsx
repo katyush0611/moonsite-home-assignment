@@ -1,8 +1,8 @@
 import { StepsProps } from "antd";
-import GarmentsList from "../../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../../models/garment.model";
 import { Outfit } from "../../../models/outfit.model";
 import { GarmentsState } from "../../../store/garments/garments.types";
+import GarmentsList from "../components/GarmentsList/GarmentsList";
 
 export const useOutfitBuilderSteps = ({
   garmentsState,

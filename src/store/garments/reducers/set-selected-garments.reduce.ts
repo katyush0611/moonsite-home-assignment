@@ -26,7 +26,6 @@ const setSelectedGarments = (
     return {
       ...state,
       usedGarmentIds: updatedUsedGarmentIds,
-      // state.usedGarmentIds.filter((id) => !ids.includes(id)),
       updatedLast: Date.now(),
     };
   } else {
@@ -47,8 +46,6 @@ const setSelectedGarments = (
       ),
     };
   }
-  // state.usedGarmentIds.push(...ids);
-  return state;
 };
 
 export { setSelectedGarments };

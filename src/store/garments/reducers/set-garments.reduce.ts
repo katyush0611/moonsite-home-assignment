@@ -1,6 +1,7 @@
 import { T } from "react-router/dist/development/route-data-5OzAzQtT";
 import { Garment, GarmentType } from "../../../models/garment.model";
 import { GarmentsState } from "../garments.types";
+import { responseDataMock } from "../../../services/api/api-service-impl";
 
 const extractAttributes = <S = number | string>(
   garments: Garment<T, S>[]
@@ -23,7 +24,9 @@ const setGarments = (state: GarmentsState, action: any): GarmentsState => {
   let pants: Garment<"pants", string>[] = [];
   let shoes: Garment<"shoes", number>[] = [];
 
-  action.payload.forEach((garment: Garment<GarmentType>) => {
+  const garments = action.payload.error ? responseDataMock : action.payload;
+
+  garments.forEach((garment: Garment<GarmentType>) => {
     switch (garment.type) {
       case "shirt":
         shirts.push(garment as Garment<"shirt", string>);

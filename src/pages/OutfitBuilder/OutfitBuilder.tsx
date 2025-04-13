@@ -20,7 +20,6 @@ const OutfitBuilder: React.FC = () => {
 
   const next = (): void => {
     if (current < steps.length - 1) setCurrent(current + 1);
-    console.log(steps[current + 1]?.key);
   };
 
   const { outfit, recommendedColors, recommendedSizes, onSelectGarment } =

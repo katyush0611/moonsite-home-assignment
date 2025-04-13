@@ -1,9 +1,8 @@
 import { initialState } from "./outfits.state";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { deleteOutfit, saveOutfit } from "./outfits.actions";
 import { Outfit } from "../../models/outfit.model";
 import { randomIdGenerator } from "../../utils/utils";
-import { OutfitsState } from "./outfits.types";
 
 const outfitsSlice = createSlice({
   name: "outfits",

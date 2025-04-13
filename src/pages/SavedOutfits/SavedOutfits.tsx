@@ -1,13 +1,14 @@
-import { List, Flex, Typography, Card, Space, Button } from "antd";
+import { List, Flex, Typography, Card, Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { AppDispatch } from "../../store/store";
 import { DeleteOutlined } from "@ant-design/icons";
 import { deleteOutfit } from "../../store/outfits/outfits.actions";
+import { OutfitsState } from "../../store/outfits/outfits.types";
 
 const SavedOutfits: React.FC = () => {
-  //@ts-ignore
-  const dispatch = useAppDispatch<AppDispatch>();
-  const outfitsState = useAppSelector((state) => state.outfitsStore);
+  const dispatch = useAppDispatch();
+  const outfitsState = useAppSelector<OutfitsState>(
+    (state) => state.outfitsStore
+  );
   return (
     <List
       dataSource={outfitsState.outfits}

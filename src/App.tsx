@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import classes from "./App.module.scss";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,7 +12,6 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import AppRouting from "./routes";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
-import type { AppDispatch } from "./store/store";
 import { fetchGarments } from "./store/garments/garments.actions";
 
 const { Header, Sider, Content } = Layout;
@@ -23,16 +23,15 @@ const App: React.FC = () => {
   } = theme.useToken();
   const navigate = useNavigate();
   const location = useLocation();
-  //@ts-ignore
-  const dispatch = useAppDispatch<AppDispatch>();
-  const garmentsState = useAppSelector((state) => state.garmentsStore);
+  const dispatch = useAppDispatch();
+  const appState = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchGarments());
   }, []);
 
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout className={classes.Layout}>
       <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
         <Menu
           mode="inline"
@@ -62,23 +61,16 @@ const App: React.FC = () => {
       </Sider>
       <Layout>
         <Header
+          className={classes.Header}
           style={{
-            padding: 0,
-            width: "100%",
             background: colorBgContainer,
-            display: "flex",
-            alignItems: "center",
           }}
         >
           <Button
             type="primary"
+            className={classes.MenuButton}
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
           />
 
           <Typography.Title
@@ -89,11 +81,8 @@ const App: React.FC = () => {
           </Typography.Title>
         </Header>
         <Content
+          className={classes.Content}
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-            overflow: "hidden",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
