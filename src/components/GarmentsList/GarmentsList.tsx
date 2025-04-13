@@ -2,12 +2,16 @@ import { Flex, Select } from "antd";
 import { Garment, GarmentType } from "../../models/garment.model";
 import GarmentListItem from "../GarmentListItem/GarmentListItem";
 import { useEffect, useState } from "react";
-import { recommendFromGarmentSize } from "../../utils/recommendations.util";
+import {
+  recommendFromGarmentColor,
+  recommendFromGarmentSize,
+} from "../../utils/recommendations.util";
 
 interface OwnProps<S = string | number> {
   garments: Garment<GarmentType>[];
   filters: { barnds: string[]; colors: string[]; sizes: S[] };
   disabledIds: number[];
+  recommendations?: { colors: string[]; sizes: (string | number)[] };
   selectedGarmentId: number;
   setSelectedGarment: (garment: Garment<GarmentType>) => void;
 }
@@ -16,6 +20,7 @@ const GarmentsList: React.FC<OwnProps> = ({
   garments,
   filters,
   disabledIds,
+  recommendations = { colors: [], sizes: [] },
   selectedGarmentId,
   setSelectedGarment,
 }: OwnProps) => {
@@ -41,11 +46,20 @@ const GarmentsList: React.FC<OwnProps> = ({
       );
     });
 
-    setFilteredGarments(newFilteredGarments);
-    console.log(
-      recommendFromGarmentSize(garments[0].type, garments[0].size.toString())
+    setFilteredGarments(
+      newFilteredGarments
+        .sort(
+          (a, b) =>
+            recommendations.colors.reverse().indexOf(b.color) -
+            recommendations.colors.reverse().indexOf(a.color)
+        )
+        .sort((a, b) => recommendations.sizes.length && +a.size - +b.size)
     );
   }, [garments, brandFilters, colorFilters, sizeFilters]);
+
+  const onGarmentSelected = (garment: Garment): void => {
+    setSelectedGarment(garment);
+  };
 
   return (
     <>
@@ -89,7 +103,7 @@ const GarmentsList: React.FC<OwnProps> = ({
             disabled={!!disabledIds.find((id) => id === garment.id)}
             garment={garment}
             isSelected={garment.id === selectedGarmentId}
-            toggleSelected={() => setSelectedGarment(garment)}
+            toggleSelected={() => onGarmentSelected(garment)}
           />
         ))}
       </Flex>

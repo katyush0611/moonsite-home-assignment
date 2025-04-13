@@ -66,12 +66,12 @@ export const recommendFromGarmentColor = (
   availableColors: string[],
   count = 3
 ): string[] => {
-  const inputHex = getHexFromColorName(garmentColor);
+  const inputHex: string | null = getHexFromColorName(garmentColor);
   if (!inputHex) throw new Error(`Invalid input color: ${garmentColor}`);
 
-  const inputRGB = hexToRgb(inputHex);
+  const inputRGB: [number, number, number] = hexToRgb(inputHex);
 
-  const validColors = availableColors
+  const validColors: { color: string; dist: number }[] = availableColors
     .map((color) => {
       const hex = getHexFromColorName(color);
       if (!hex) return null;
@@ -85,5 +85,5 @@ export const recommendFromGarmentColor = (
   return validColors
     .sort((a, b) => a.dist - b.dist)
     .slice(0, count)
-    .map((c) => c.color);
+    .map((colorObject) => colorObject.color);
 };

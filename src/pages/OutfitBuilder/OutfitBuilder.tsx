@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Steps } from "antd";
-import GarmentsList from "../../components/GarmentsList/GarmentsList";
-import { Garment, GarmentType } from "../../models/garment.model";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import type { AppDispatch } from "../../store/store";
 import { useLocation, useNavigate } from "react-router";
 import classes from "./OutfitBuilder.module.scss";
-import { Outfit } from "../../models/outfit.model";
 import { saveOutfit } from "../../store/outfits/outfits.actions";
-import { StepsProps } from "antd/lib";
+import { useOutfitBuilderSteps } from "./hooks/useOutfitBuilderSteps";
+import { useOutfitSelection } from "./hooks/useOutfitSelection";
+import { GarmentType } from "../../models/garment.model";
 
 const OutfitBuilder: React.FC = () => {
   const navigate = useNavigate();
@@ -17,127 +15,57 @@ const OutfitBuilder: React.FC = () => {
   const dispatch = useAppDispatch();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
 
-  const [current, setCurrent] = useState(0);
-  const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
+  const [current, setCurrent] = useState<number>(0);
+  const [nextType, setNextType] = useState<GarmentType>("pants");
 
-  const onSelectGarment = (garment: Garment<GarmentType>): void => {
-    switch (garment.type) {
-      case "shirt":
-        setOutfit({ ...outfit, shirt: garment as Garment<"shirt"> });
-        break;
-      case "pants":
-        setOutfit({ ...outfit, pants: garment as Garment<"pants"> });
-        break;
-      case "shoes":
-        setOutfit({ ...outfit, shoes: garment as Garment<"shoes"> });
-        break;
-    }
+  const next = (): void => {
+    if (current < steps.length - 1) setCurrent(current + 1);
+    console.log(steps[current + 1]?.key);
   };
 
-  const outfitBuilderSteps = () =>
-    [
-      {
-        key: "shirts",
-        title: "Shirts",
-        content: (
-          <GarmentsList
-            garments={garmentsState.shirts.garments}
-            filters={{
-              barnds: garmentsState.shirts.brands,
-              colors: garmentsState.shirts.colors,
-              sizes: garmentsState.shirts.sizes,
-            }}
-            disabledIds={garmentsState.usedGarmentIds}
-            selectedGarmentId={outfit?.shirt?.id}
-            setSelectedGarment={onSelectGarment}
-          />
-        ),
-      },
-      {
-        key: "pants",
-        title: "Pants",
-        content: (
-          <GarmentsList
-            garments={garmentsState.pants.garments}
-            filters={{
-              barnds: garmentsState.pants.brands,
-              colors: garmentsState.pants.colors,
-              sizes: garmentsState.pants.sizes,
-            }}
-            disabledIds={garmentsState.usedGarmentIds}
-            selectedGarmentId={outfit?.pants?.id}
-            setSelectedGarment={onSelectGarment}
-          />
-        ),
-      },
-      {
-        key: "shoes",
-        title: "Shoes",
-        content: (
-          <GarmentsList
-            garments={garmentsState.shoes.garments}
-            filters={{
-              barnds: garmentsState.shoes.brands,
-              colors: garmentsState.shoes.colors,
-              sizes: garmentsState.shoes.sizes,
-            }}
-            disabledIds={garmentsState.usedGarmentIds}
-            selectedGarmentId={outfit?.shoes?.id}
-            setSelectedGarment={onSelectGarment}
-          />
-        ),
-      },
-    ].sort((a, b) =>
-      a.key === initialStep ? -1 : b.key === initialStep ? 1 : 0
-    );
+  const { outfit, recommendedColors, recommendedSizes, onSelectGarment } =
+    useOutfitSelection(garmentsState, nextType, next);
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
+  const { steps, stepItems } = useOutfitBuilderSteps({
+    outfit,
+    initialStep,
+    garmentsState,
+    recommendedSizes,
+    recommendedColors,
+    onSelectGarment,
+  });
 
-  const prev = () => {
-    setCurrent(current - 1);
-  };
+  useEffect(() => {
+    setNextType(steps[current + 1]?.key as GarmentType);
+  }, [steps]);
 
   const onSaveOutfit = (): void => {
     dispatch(saveOutfit(outfit));
     navigate("/saved");
   };
 
-  const items = outfitBuilderSteps().map(
-    (item) =>
-      ({
-        iconPrefix: item.key,
-        title: item.title,
-        status: "process",
-      } as StepsProps)
-  );
-
   return (
     <>
-      <Steps current={current} items={items} onChange={setCurrent} />
-      <div className={classes.Content}>
-        {outfitBuilderSteps()[current].content}
-      </div>
-      <div style={{ marginTop: 24 }}>
-        {current < outfitBuilderSteps().length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
+      <Steps current={current} items={stepItems} onChange={setCurrent} />
+      <div className={classes.Content}>{steps[current].content}</div>
+      <div className={classes.StepActions}>
+        {current < stepItems.length - 1 && (
+          <Button type="primary" onClick={next} children="Next" />
         )}
-        {current === outfitBuilderSteps().length - 1 && (
+        {current === steps.length - 1 && (
           <Button
             type="primary"
             onClick={onSaveOutfit}
             disabled={!(outfit.shirt && outfit.pants && outfit.shoes)}
-          >
-            Done
-          </Button>
+            children="Done"
+          />
         )}
         {current > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-            Previous
-          </Button>
+          <Button
+            className={classes.PrevButton}
+            onClick={() => setCurrent(current - 1)}
+            children="Previous"
+          />
         )}
       </div>
     </>
