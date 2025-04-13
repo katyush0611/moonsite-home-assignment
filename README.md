@@ -1,12 +1,105 @@
-# React + Vite
+# Moonsite Home Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A brief description of what this project does and who it's for
 
-Currently, two official plugins are available:
+## Run Locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clone the project
 
-## Expanding the ESLint configuration
+```bash
+  git clone https://github.com/katyush0611/moonsite-home-assignment.git
+```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Go to the project directory
+
+```bash
+  cd moonsite-home-assignment
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+Visit App
+
+```bash
+localhost:5173/
+```
+
+## Tech Stack
+
+**Client:** React, Redux, SCSS, Ant design
+
+## App Content
+
+- Home Page
+  ![Home Page Screenshot](./src//assets/images/home-page-screenshot.jpeg)
+
+- Outfit Builder Page
+  ![OutfitBuilder Page Screenshot](./src//assets/images/outfitbuilder-page-screenshot.jpeg)
+- Saved Outfits Page
+  ![Saved Outfits Page Screenshot](./src//assets/images/outfits-page-screenshot.jpeg)
+
+## OutfitBuilder
+
+#### Custom hooks
+
+| Name                    | Description                                                  |
+| :---------------------- | :----------------------------------------------------------- |
+| `useOutfitBuilderSteps` | For initial step build                                       |
+| `useOutfitSelection`    | Managing the on garment select logic and outfit object build |
+| `useRecommendations`    | Managed by useOutfitSelection for inserting recommendations  |
+
+#### Features
+
+- Filters - user can filter garments by 3 parameters: brand, color and size.
+- **Recommendations algorithm** - when garment is selected, the app will sort the next outfit builder step garments list by size and color, based on the selected garment size and color. according to the following logic ->
+
+  - By color recommendation util, it basicaly takes a color name and by converting it to rgb maps the availableColors (converting them to) and by calculating the colorDistance we can sort the "more" compatible colors.
+
+  - By Size recommendation with Rule-based system, return an arrays of recommended sizes for each garment type, to later be sorted by in the list component. each garment type has recommendation map
+
+  ```dash
+  type RecommendationMap = {
+  [key: string]: {
+  shirts?: string[];
+  pants?: number[];
+  shoes?: number[];
+  };
+  };
+  ```
+
+```dash
+recommendFromGarmentColor: (props) => string[];
+```
+
+| Prop Name         | Type       | Description                             |
+| :---------------- | :--------- | :-------------------------------------- |
+| `garmentColor`    | `string`   | selected garment color                  |
+| `availableColors` | `string[]` | next garment type availble colors       |
+| `count`           | `number`   | number of results to return (default 3) |
+
+```dash
+  recommendFromGarmentSize: (props) => { pants: number[]; shoes: number[]; shirts: string[] };
+```
+
+| Prop Name | Type               | Description                                   |
+| :-------- | :----------------- | :-------------------------------------------- |
+| `type`    | `GarmentType`      | Garment type ("shirt" \| "pants" \| "shoes" ) |
+| `size`    | `string \| number` | selected garment size                         |
+
+### Examples:
+
+```dash
+recommendFromGarmentSize("shirt", "S") === {pants: [30, 31], shoes: [36, 37]}
+
+recommendFromGarmentColor("red", ["white", "red", "pink", "green"]) === ["red", "white", "pink"]
+```
