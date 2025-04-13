@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Steps } from "antd";
 import GarmentsList from "../../components/GarmentsList/GarmentsList";
 import { Garment, GarmentType } from "../../models/garment.model";
@@ -35,59 +35,62 @@ const OutfitBuilder: React.FC = () => {
     }
   };
 
-  const outfitBuilderSteps = () => [
-    {
-      key: "shirts",
-      title: "Shirts",
-      content: (
-        <GarmentsList
-          garments={garmentsState.shirts.garments}
-          filters={{
-            barnds: garmentsState.shirts.brands,
-            colors: garmentsState.shirts.colors,
-            sizes: garmentsState.shirts.sizes,
-          }}
-          disabledIds={garmentsState.usedGarmentIds}
-          selectedGarmentId={outfit?.shirt?.id}
-          setSelectedGarment={onSelectGarment}
-        />
-      ),
-    },
-    {
-      key: "pants",
-      title: "Pants",
-      content: (
-        <GarmentsList
-          garments={garmentsState.pants.garments}
-          filters={{
-            barnds: garmentsState.pants.brands,
-            colors: garmentsState.pants.colors,
-            sizes: garmentsState.pants.sizes,
-          }}
-          disabledIds={garmentsState.usedGarmentIds}
-          selectedGarmentId={outfit?.pants?.id}
-          setSelectedGarment={onSelectGarment}
-        />
-      ),
-    },
-    {
-      key: "shoes",
-      title: "Shoes",
-      content: (
-        <GarmentsList
-          garments={garmentsState.shoes.garments}
-          filters={{
-            barnds: garmentsState.shoes.brands,
-            colors: garmentsState.shoes.colors,
-            sizes: garmentsState.shoes.sizes,
-          }}
-          disabledIds={garmentsState.usedGarmentIds}
-          selectedGarmentId={outfit?.shoes?.id}
-          setSelectedGarment={onSelectGarment}
-        />
-      ),
-    },
-  ];
+  const outfitBuilderSteps = () =>
+    [
+      {
+        key: "shirts",
+        title: "Shirts",
+        content: (
+          <GarmentsList
+            garments={garmentsState.shirts.garments}
+            filters={{
+              barnds: garmentsState.shirts.brands,
+              colors: garmentsState.shirts.colors,
+              sizes: garmentsState.shirts.sizes,
+            }}
+            disabledIds={garmentsState.usedGarmentIds}
+            selectedGarmentId={outfit?.shirt?.id}
+            setSelectedGarment={onSelectGarment}
+          />
+        ),
+      },
+      {
+        key: "pants",
+        title: "Pants",
+        content: (
+          <GarmentsList
+            garments={garmentsState.pants.garments}
+            filters={{
+              barnds: garmentsState.pants.brands,
+              colors: garmentsState.pants.colors,
+              sizes: garmentsState.pants.sizes,
+            }}
+            disabledIds={garmentsState.usedGarmentIds}
+            selectedGarmentId={outfit?.pants?.id}
+            setSelectedGarment={onSelectGarment}
+          />
+        ),
+      },
+      {
+        key: "shoes",
+        title: "Shoes",
+        content: (
+          <GarmentsList
+            garments={garmentsState.shoes.garments}
+            filters={{
+              barnds: garmentsState.shoes.brands,
+              colors: garmentsState.shoes.colors,
+              sizes: garmentsState.shoes.sizes,
+            }}
+            disabledIds={garmentsState.usedGarmentIds}
+            selectedGarmentId={outfit?.shoes?.id}
+            setSelectedGarment={onSelectGarment}
+          />
+        ),
+      },
+    ].sort((a, b) =>
+      a.key === initialStep ? -1 : b.key === initialStep ? 1 : 0
+    );
 
   const next = () => {
     setCurrent(current + 1);
@@ -102,20 +105,14 @@ const OutfitBuilder: React.FC = () => {
     navigate("/saved");
   };
 
-  // [item, ...arr.filter(i => i !== item)]
-  // location.state?.initialStep
-  const items = outfitBuilderSteps()
-    .map(
-      (item) =>
-        ({
-          iconPrefix: item.key,
-          title: item.title,
-          status: "process",
-        } as StepsProps)
-    )
-    .sort((a, b) =>
-      a.iconPrefix === initialStep ? -1 : b.iconPrefix === initialStep ? 1 : 0
-    );
+  const items = outfitBuilderSteps().map(
+    (item) =>
+      ({
+        iconPrefix: item.key,
+        title: item.title,
+        status: "process",
+      } as StepsProps)
+  );
 
   return (
     <>
