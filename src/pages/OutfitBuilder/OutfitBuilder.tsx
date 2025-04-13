@@ -14,8 +14,7 @@ const OutfitBuilder: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const initialStep = location.state?.initialStep;
-  //@ts-ignore
-  const dispatch = useAppDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const garmentsState = useAppSelector((state) => state.garmentsStore);
 
   const [current, setCurrent] = useState(0);

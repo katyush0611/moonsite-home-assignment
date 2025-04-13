@@ -29,6 +29,23 @@ const setSelectedGarments = (
       // state.usedGarmentIds.filter((id) => !ids.includes(id)),
       updatedLast: Date.now(),
     };
+  } else {
+    let availbleItems: number[] = [];
+    state.shirts.garments.forEach(
+      (g) => g.brand === outfit.shirt.brand && availbleItems.push(g.id)
+    );
+    state.pants.garments.forEach(
+      (g) => g.brand === outfit.pants.brand && availbleItems.push(g.id)
+    );
+    state.shoes.garments.forEach(
+      (g) => g.brand === outfit.shoes.brand && availbleItems.push(g.id)
+    );
+    return {
+      ...state,
+      usedGarmentIds: state.usedGarmentIds.filter(
+        (id) => !availbleItems.includes(id)
+      ),
+    };
   }
   // state.usedGarmentIds.push(...ids);
   return state;
