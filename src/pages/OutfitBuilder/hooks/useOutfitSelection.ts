@@ -10,11 +10,13 @@ export const useOutfitSelection = (
   next: () => void
 ) => {
   const [outfit, setOutfit] = useState<Outfit>({} as Outfit);
+  const [currentType, setCurrentType] = useState<GarmentType>("shirt");
 
   const { recommendedColors, recommendedSizes, updateRecommendations } =
-    useRecommendations(garmentsState, nextType);
+    useRecommendations(garmentsState, currentType, nextType);
 
   const onSelectGarment = (garment: Garment<GarmentType>): void => {
+    setCurrentType(garment.type);
     switch (garment.type) {
       case "shirt":
         setOutfit((prev) => ({ ...prev, shirt: garment as Garment<"shirt"> }));

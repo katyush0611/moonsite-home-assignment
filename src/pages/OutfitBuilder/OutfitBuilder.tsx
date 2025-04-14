@@ -33,6 +33,9 @@ const OutfitBuilder: React.FC = () => {
     recommendedColors,
     onSelectGarment,
   });
+  useEffect(() => {
+    console.log(recommendedSizes);
+  }, [recommendedSizes]);
 
   useEffect(() => {
     setNextType(steps[current + 1]?.key as GarmentType);

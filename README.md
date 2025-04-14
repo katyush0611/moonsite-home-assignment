@@ -75,16 +75,38 @@ localhost:5173/
 
   - By color recommendation util, it basicaly takes a color name and by converting it to rgb maps the availableColors (converting them to) and by calculating the colorDistance we can sort the "more" compatible colors.
 
-  - By Size recommendation with Rule-based system, return an arrays of recommended sizes for each garment type, to later be sorted by in the list component. each garment type has recommendation map
+  - By Size recommendations, the app has a SizeTag system that converts all garment type sizes to universal unit.
+    the app uses 7 SizeTag units. and by calculating the size score of the SizeTag the util apply the same score to the availble sizes to.
+
+    ```dash
+      enum SizeTag {
+        XXS = "XXS",
+        XS = "XS",
+        S = "S",
+        M = "M",
+        L = "L",
+        XL = "XL",
+        XXL = "XXL",
+      }
+    ```
 
   ```dash
-  type RecommendationMap = {
-  [key: string]: {
-  shirts?: string[];
-  pants?: number[];
-  shoes?: number[];
-  };
-  };
+    const selectedGarmentSizeTag = S;                            // given SizeTag
+    const sizeTagsArray = [XXS, XS, S, M, L, XL. XXL];         // sizeTags count(length): 7
+    const availbleSizes = [35, 36, 37, 39, 41, 42, 44, 45, 46];
+
+    const sizeTagScore = (sizeTagsArray[selectedGarmentSizeTag] + 1) / sizeTagsArray.length;   // (3/7) = 0.42
+    const sizeXscore = sizeTagscore * availbleSizes.length;                     // 0.42 * 9 = 3.85 in our case
+
+    //**  sizeXscore represents the place in order where the size is according to all availble sizes.
+    //**  then we do Math.floor()
+    //**  so availbleSizes[3 - 1] will give us 37
+    //**  and for the second option Math.floor() + 1
+    //**  so availbleSizes[4 - 1] will give us 38
+
+    return [availbleSizes[Math.floor(sizeXscore)], availbleSizes[Math.floor(sizeXscore)]]
+
+    recommended (shoes for this example) sizes for 'S' SizeTag (can be shirt or pants) are [37, 38]
   ```
 
 ```dash
@@ -98,18 +120,18 @@ recommendFromGarmentColor: (props) => string[];
 | `count`           | `number`   | number of results to return (default 3) |
 
 ```dash
-  recommendFromGarmentSize: (props) => { pants: number[]; shoes: number[]; shirts: string[] };
+  recommendFromGarmentSize: (props) => (string | number)[];
 ```
 
-| Prop Name | Type               | Description                                   |
-| :-------- | :----------------- | :-------------------------------------------- |
-| `type`    | `GarmentType`      | Garment type ("shirt" \| "pants" \| "shoes" ) |
-| `size`    | `string \| number` | selected garment size                         |
+| Prop Name       | Type                   | Description                      |
+| :-------------- | :--------------------- | :------------------------------- |
+| `sizeTag`       | `SizeTag`              | the garment size in SizeTag unit |
+| `availbleSizes` | `(string \| number)[]` | next step garment sizes          |
 
 ### Examples:
 
 ```dash
-recommendFromGarmentSize("shirt", "S") === {pants: [30, 31], shoes: [36, 37]}
+recommendFromGarmentSize("S", [35,36,37,,39,42...45,46]) === [36, 37]
 
 recommendFromGarmentColor("red", ["white", "red", "pink", "green"]) === ["red", "white", "pink"]
 ```

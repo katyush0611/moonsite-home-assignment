@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Garment } from "../../../../../models/garment.model";
+import { sortBySizeRecommendations } from "../../../../../utils/recommendations.util";
 
 export const useFilteredGarments = (
   garments: Garment[],
@@ -20,13 +21,14 @@ export const useFilteredGarments = (
     });
 
     setFilteredGarments(
-      result
-        .sort(
+      sortBySizeRecommendations(
+        result.sort(
           (a, b) =>
             recommendations.colors.slice().reverse().indexOf(b.color) -
             recommendations.colors.slice().reverse().indexOf(a.color)
-        )
-        .sort((a, b) => recommendations.sizes.length && +a.size - +b.size)
+        ),
+        recommendations.sizes as number[]
+      )
     );
   }, [garments, brandFilters, colorFilters, sizeFilters, recommendations]);
 

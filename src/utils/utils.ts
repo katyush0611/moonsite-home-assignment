@@ -1,5 +1,9 @@
 import { ApplicationState } from "../store/store";
 
+export const sortAscending = (arr: number[]): number[] => {
+  return [...arr].sort((a, b) => a - b);
+};
+
 export const randomIdGenerator = (prefix: number): number => {
   const start = prefix.toString();
   const randomPart = Math.floor(Math.random() * 9999).toString();
